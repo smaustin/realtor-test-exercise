@@ -53,11 +53,11 @@ class DBHelper {
    */
   static fetchHouseById(id, callback) {
     // fetch all houses with proper error handling.
-    DBHelper.fetchhouses((error, houses) => {
+    DBHelper.fetchAllHouses((error, houses) => {
       if (error) {
         callback(error, null);
       } else {
-        const house = houses.find(r => r.id == id);
+        const house = houses.find(r => r.mls == id);
         if (house) { // Got the house
           callback(null, house);
         } else { // house does not exist in the database
@@ -83,6 +83,6 @@ class DBHelper {
    * House page URL.
    */
   static urlForHouse(house) {
-    return (`./house.html?id=${house.mls}`);
+    return (`./house.html?mls=${house.mls}`);
   }
 }
