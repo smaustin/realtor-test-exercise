@@ -67,7 +67,38 @@ class DBHelper {
     });
   }
 
-//   TODO: CRUD Operations
+  /**
+   * Delete a house by its ID.
+   */
+  static deleteHouseById(id, callback) {
+    return fetch(`${DBHelper.DATABASE_URL}/houses/${id}`, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(finalData => {
+      callback(null, finalData);
+    })
+    .catch(err => callback(`Delete Request failed. Returned status of ${err.statusText}`));
+  }
+  /**
+   * Add or Update a house .
+   */
+  static processHouse(method, formData, callback) {
+    const baseURL = `${DBHelper.DATABASE_URL}/houses/`;
+    const fetchURL = (method === 'PUT') ? `${baseURL}/${formData.mls}`: baseURL;
+    return fetch(fetchURL, {
+      method: method,
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(finalData => {
+      callback(null, finalData);
+    })
+    .catch(err => callback(`Delete Request failed. Returned status of ${err.statusText}`));
+  }
 
   /**
    * House image URL.
