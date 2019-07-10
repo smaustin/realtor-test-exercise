@@ -1,3 +1,5 @@
+'use strict'
+
 let house;
 
 document.addEventListener('DOMContentLoaded', (event) => {
