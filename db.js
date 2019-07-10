@@ -1,9 +1,11 @@
 const faker = require('faker');
+const fs = require('fs');
 faker.seed(1234)
 
-function generateHouses () {
+generateHouses = () => {
   let houses = [];
 
+  // set a id start and end for number of houses to generate
   for (let id = 10; id < 60; id++) {
     let street1 = faker.address.streetAddress();
     let street2 = faker.address.streetAddress();
@@ -22,7 +24,7 @@ function generateHouses () {
     let description = faker.lorem.paragraph();
 
     houses.push({
-      "mls": id,
+      "id": id,
       "street1": street1,
       "street2": street2,
       "city": city,
@@ -41,7 +43,42 @@ function generateHouses () {
     });
   }
 
-  return { "houses": houses }
+  return houses;
 }
 
-module.exports = generateHouses
+generateUsers = () => {
+  let users = [];
+
+  // set master user for testing
+  users.push({
+    "id": 1,
+    "user_email": 'myemail@testing.com',
+    "user_password": 'password'
+  });
+
+  // set a id start and end for number of users to generate
+  for (let id = 2; id < 10; id++) {
+    let email = faker.internet.email();
+    let password = faker.internet.password();
+
+    users.push({
+      "id": id,
+      "user_email": email,
+      "user_password": password
+    });
+  }
+
+  return users;
+}
+
+generateData = () => {
+  return { "houses": generateHouses(), "users": generateUsers() };
+}
+
+let data = JSON.stringify(generateData(), null, 2);
+
+// module.export = generatedData;
+fs.writeFileSync('db.json', data, error => {
+  if (error) console.log('File creation failed.');
+  console.log('File created successfully.');
+});

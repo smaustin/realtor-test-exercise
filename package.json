@@ -4,7 +4,7 @@
     "version": "4.2.1",
     "scripts": {
         "start": "node_modules/.bin/gulp watch",
-        "start-mockapi": "json-server --watch houses.js --id 'mls' --port 4001"
+        "start-mockapi": "node db.js && json-server --config json-server.json --watch db.json"
     },
     "description": "An HTML template with a hero heading and feature cards built with Bootstrap",
     "keywords": [

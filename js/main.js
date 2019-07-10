@@ -22,7 +22,7 @@ fetchHouses = () => {
     });
 }
 
-  /**
+/**
  * Create all houses HTML and add them to the webpage.
  */
 fillHousesHTML = (houses = self.houses) => {

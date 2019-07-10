@@ -21,7 +21,7 @@ fetchHouseFromURL = () => {
     if (!id) { // no id found in URL
       console.log('No house id in URL');
     } else {
-        const house = self.houses.find(r => r.mls == id);
+        const house = self.houses.find(r => r.id == id);
         self.house = house;
         document.getElementById('submit-button').innerHTML = 'Edit House';
         fillHouseForm();
@@ -116,14 +116,14 @@ processHouseForm = (event) => {
         jsonData[key] = value;
     }
 
-    if (formData.has('mls')) {
-        if (formData.get('mls')) {
+    if (formData.has('id')) {
+        if (formData.get('id')) {
             editHouse(jsonData);
         } else {
             addHouse(jsonData);
         }
     } else {
-        console.log('Form error no mls passed');
+        console.log('Form error no id passed');
     }
 }
 
@@ -152,9 +152,9 @@ clearHousesTable = () => {
 createHouseRow = (house) => {
     const row = document.createElement('tr');
     
-    const mls = document.createElement('td');
-    mls.innerHTML = house.mls;
-    row.appendChild(mls);
+    const id = document.createElement('td');
+    id.innerHTML = house.id;
+    row.appendChild(id);
 
     const street1 = document.createElement('td');
     street1.innerHTML = house.street1;
@@ -180,14 +180,14 @@ createHouseRow = (house) => {
     delHouse.innerHTML = 'Delete';
     delHouse.addEventListener('click', (event) => {
         event.preventDefault();
-        deleteHouse(house.mls);
+        deleteHouse(house.id);
     });
     options.append(delHouse);
 
     editHouse.className = 'editHouse btn btn-primary';
     editHouse.innerHTML = 'Edit';
-    editHouse.href = `./admin.html?mls=${house.mls}`;
-    editHouse.setAttribute('aria-label', `${editHouse.innerHTML} ${house.mls}`);
+    editHouse.href = `./admin.html?mls=${house.id}`;
+    editHouse.setAttribute('aria-label', `${editHouse.innerHTML} ${house.id}`);
     editHouse.setAttribute('role', 'button');
     options.append(editHouse);
 

@@ -57,7 +57,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        const house = houses.find(r => r.mls == id);
+        const house = houses.find(r => r.id == id);
         if (house) { // Got the house
           callback(null, house);
         } else { // house does not exist in the database
@@ -85,7 +85,7 @@ class DBHelper {
    */
   static processHouse(method, formData, callback) {
     const baseURL = `${DBHelper.DATABASE_URL}/houses/`;
-    const fetchURL = (method === 'PUT') ? `${baseURL}/${formData.mls}`: baseURL;
+    const fetchURL = (method === 'PUT') ? `${baseURL}/${formData.id}`: baseURL;
     return fetch(fetchURL, {
       method: method,
       body: JSON.stringify(formData),
@@ -114,6 +114,6 @@ class DBHelper {
    * House page URL.
    */
   static urlForHouse(house) {
-    return (`./house.html?mls=${house.mls}`);
+    return (`./house.html?mls=${house.id}`);
   }
 }
