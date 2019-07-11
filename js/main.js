@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 /**
  * Fetch all houses and set their HTML.
  */
-fetchHouses = () => {
+const fetchHouses = () => {
     DBHelper.fetchAllHouses((error, houses) => {
       if (error) { // Got an error
         console.error(error);
@@ -22,22 +22,22 @@ fetchHouses = () => {
         fetchFilterOptions(['city','state','zip']);
       }
     });
-}
+};
 
 /**
  * Create all houses HTML and add them to the webpage.
  */
-fillHousesHTML = (houses = self.houses) => {
+const fillHousesHTML = (houses = self.houses) => {
     const list = document.getElementById('houses-list');
     houses.forEach(house => {
       list.append(createHouseHTML(house));
     });
-}
+};
 
 /**
  * Create house HTML.
  */
-createHouseHTML = (house) => {
+const createHouseHTML = (house) => {
     const item = document.createElement('div');
     item.className = 'col-lg-3 col-md-6 mb-4';
 
@@ -81,12 +81,12 @@ createHouseHTML = (house) => {
     footer.append(more);
    
     return item;
-}
+};
 
 /**
  * Update page for current houses.
  */
-updateHouses = () => {
+const updateHouses = () => {
     const cSelect = document.getElementById('city-select');
     const sSelect = document.getElementById('state-select');
     const zSelect = document.getElementById('zip-select');
@@ -115,23 +115,23 @@ updateHouses = () => {
         fillHousesHTML();
       }
     })
-  }
+};
 
 /**
  * Clear current houses HTML.
  */
-resetHouses = (houses) => {
+const resetHouses = (houses) => {
     // Remove all houses
     self.houses = [];
     const list = document.getElementById('houses-list');
     list.innerHTML = '';
     self.houses = houses;
-  }
+};
 
   /**
  * Fetch all house filter options.
  */
-fetchFilterOptions = (filters) => {
+const fetchFilterOptions = (filters) => {
     // check for houses
     if(!self.houses || self.houses.length == 0) {
         fetchHouses(); 
@@ -143,12 +143,12 @@ fetchFilterOptions = (filters) => {
         const uniqueItems = items.filter((v, i) => items.indexOf(v) == i);
         fillFilterOption(filter, uniqueItems);
     })
-  }
+};
 
   /**
  * Set fitler selects.
  */
-fillFilterOption = (filter, uniqueItems) => {
+const fillFilterOption = (filter, uniqueItems) => {
     const select = document.getElementById(`${filter}-select`);
     uniqueItems.forEach(item => {
       const option = document.createElement('option');
@@ -156,4 +156,4 @@ fillFilterOption = (filter, uniqueItems) => {
       option.value = item;
       select.append(option);
     });
-  }
+};

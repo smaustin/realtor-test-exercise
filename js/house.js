@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 /**
  * Get current house from page URL.
  */
-fetchHouseFromURL = () => {
+const fetchHouseFromURL = () => {
     const id = getParameterByName('mls');
 
     if (!id) { // no id found in URL
@@ -24,9 +24,9 @@ fetchHouseFromURL = () => {
         fillHouseHTML();
       });
     }
-  }
+};
 
-fillHouseHTML = (house = self.house) => {
+const fillHouseHTML = (house = self.house) => {
     const houseDetails = document.getElementById('house-details');
     // loop over each house detial item
     for (let [key, value] of Object.entries(house)) {
@@ -34,12 +34,12 @@ fillHouseHTML = (house = self.house) => {
         p.innerHTML = `<strong>${key}</strong> : ${value}`;
         houseDetails.append(p);
     }
-}
+};
 
 /**
  * Get a parameter by name from page URL.
  */
-getParameterByName = (name, url) => {
+const getParameterByName = (name, url) => {
     if (!url) {
       url = window.location.href;
     }
@@ -52,4 +52,4 @@ getParameterByName = (name, url) => {
     if (!results[2])
       return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
+};

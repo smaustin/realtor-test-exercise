@@ -80,6 +80,7 @@ class DBHelper {
     })
     .catch(err => callback(`Delete Request failed. Returned status of ${err.statusText}`));
   }
+  
   /**
    * Add or Update a house .
    */
