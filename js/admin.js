@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 /**
  * Get current house from page URL.
  */
-fetchHouseFromURL = () => {
+let fetchHouseFromURL = () => {
     const id = getParameterByName('mls');
 
     if (!id) { // no id found in URL
@@ -27,9 +27,9 @@ fetchHouseFromURL = () => {
         document.getElementById('submit-button').innerHTML = 'Edit House';
         fillHouseForm();
     }
-  }
+};
 
-fillHouseForm = (house = self.house) => {
+let fillHouseForm = (house = self.house) => {
     // loop over each house detail item
     for (let key in house) {
         if (document.getElementById(key) && key !== 'photos' && key !== 'date_listed') {
@@ -40,16 +40,16 @@ fillHouseForm = (house = self.house) => {
             document.getElementById(key).value = listDate;
         }
     }
-}
+};
 
-clearHouseForm = () => {
+let clearHouseForm = () => {
     document.getElementById('house-form').reset();
-}
+};
 
 /**
  * Fetch all houses and set their HTML.
  */
-fetchHouses = () => {
+let fetchHouses = () => {
     DBHelper.fetchAllHouses((error, houses) => {
       if (error) { // Got an error
         console.error(error);
@@ -59,12 +59,12 @@ fetchHouses = () => {
         fetchHouseFromURL(); //check for house to edit
       }
     });
-}
+};
 
 /**
  * Delete house and redisplay.
  */
-deleteHouse = (id) => {
+let deleteHouse = (id) => {
     DBHelper.deleteHouseById(id, (error, response) => {
       if (error) { // Got an error
         console.error(error);
@@ -73,9 +73,9 @@ deleteHouse = (id) => {
             fetchHouses();
       }
     });
-}
+};
 
-addHouse = (formData) => {
+let addHouse = (formData) => {
     const method = 'POST';
     DBHelper.processHouse(method, formData, (error, response) => {
         if (error) {
@@ -86,9 +86,9 @@ addHouse = (formData) => {
             // fetchHouses();
         }
     });
-}
+};
 
-editHouse = (formData) => {
+let editHouse = (formData) => {
     const method = 'PUT';
     DBHelper.processHouse(method, formData, (error, response) => {
         if (error) {
@@ -99,13 +99,13 @@ editHouse = (formData) => {
             // fetchHouses();
         }
     });
-}
+};
 
 /**
  * Function to determine if this is add or edit.
  * TODO: Add validation
  */
-processHouseForm = (event) => {
+let processHouseForm = (event) => {
     event.preventDefault();
     // TODO validation
     let form = document.getElementById('house-form');
@@ -126,31 +126,31 @@ processHouseForm = (event) => {
     } else {
         console.log('Form error no id passed');
     }
-}
+};
 
 /**
  * Create all houses HTML and add them to the webpage.
  */
-fillHousesTable = (houses = self.houses) => {
+let fillHousesTable = (houses = self.houses) => {
     const tbody = document.querySelector('#houses-table > table > tbody');
     houses.forEach(house => {
         const row = document.createElement('tr');
         tbody.append(createHouseRow(house));
     });
-}
+};
 
 /**
  * Clear all houses HTML.
  */
-clearHousesTable = () => {
+let clearHousesTable = () => {
     const tbody = document.querySelector('#houses-table > table > tbody');
     tbody.innerHTML = '';
-}
+};
 
 /**
  * Create house row HTML.
  */
-createHouseRow = (house) => {
+let createHouseRow = (house) => {
     const row = document.createElement('tr');
     
     const id = document.createElement('td');
@@ -195,12 +195,12 @@ createHouseRow = (house) => {
     row.appendChild(options);
 
     return row;
-}
+};
 
 /**
  * Get a parameter by name from page URL.
  */
-getParameterByName = (name, url) => {
+let getParameterByName = (name, url) => {
     if (!url) {
       url = window.location.href;
     }
@@ -213,4 +213,4 @@ getParameterByName = (name, url) => {
     if (!results[2])
       return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
+};
