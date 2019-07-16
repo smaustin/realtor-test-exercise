@@ -1,4 +1,5 @@
-'use strict'
+'use strict';
+
 // TODO: add authentication
 let houses;
 let house;
@@ -6,211 +7,220 @@ let house;
 /**
  * Fetch houses as soon as the page is loaded.
  */
-document.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOMContentLoaded');
+document.addEventListener(
+  'DOMContentLoaded',
+  event => {
     fetchHouses();
-    const houseForm = document.getElementById('house-form');
-    houseForm.addEventListener('submit', processHouseForm, false);
-});
+  },
+  false
+);
 
 /**
  * Get current house from page URL.
  */
-let fetchHouseFromURL = () => {
-    const id = getParameterByName('mls');
+const fetchHouseFromURL = () => {
+  const id = getParameterByName('mls');
 
-    if (!id) { // no id found in URL
-      console.log('No house id in URL');
-    } else {
-        const house = self.houses.find(r => r.id == id);
-        self.house = house;
-        document.getElementById('submit-button').innerHTML = 'Edit House';
-        fillHouseForm();
-    }
+  if (!id) {
+    // no id found in URL
+    console.log('No house id in URL');
+  } else {
+    const house = self.houses.find(r => r.id == id);
+    self.house = house;
+    fillHouseForm();
+  }
 };
 
-let fillHouseForm = (house = self.house) => {
-    // loop over each house detail item
-    for (let key in house) {
-        if (document.getElementById(key) && key !== 'photos' && key !== 'date_listed') {
-            document.getElementById(key).value = house[key];
-        } else if (key === 'date_listed') {
-            let d = new Date(house[key]);
-            let listDate = `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
-            document.getElementById(key).value = listDate;
-        }
+const fillHouseForm = (house = self.house) => {
+  // loop over each house detail item
+  for (let key in house) {
+    if (
+      document.getElementById(key) &&
+      key !== 'photos' &&
+      key !== 'date_listed'
+    ) {
+      document.getElementById(key).value = house[key];
+    } else if (key === 'date_listed') {
+      let d = new Date(house[key]);
+      let listDate = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+      document.getElementById(key).value = listDate;
     }
+  }
+  document
+    .getElementById('house-form')
+    .addEventListener('submit', processHouseForm, false);
+  document.getElementById('submit-button').innerHTML = 'Edit House';
 };
 
-let clearHouseForm = () => {
-    document.getElementById('house-form').reset();
+const clearHouseForm = () => {
+  document.getElementById('house-form').reset();
 };
 
 /**
  * Fetch all houses and set their HTML.
  */
-let fetchHouses = () => {
-    DBHelper.fetchAllHouses((error, houses) => {
-      if (error) { // Got an error
-        console.error(error);
-      } else {
-        self.houses = houses;
-        fillHousesTable();
-        fetchHouseFromURL(); //check for house to edit
-      }
-    });
+const fetchHouses = () => {
+  DBHelper.fetchAllHouses((error, houses) => {
+    if (error) {
+      // Got an error
+      console.error(error);
+    } else {
+      self.houses = houses;
+      fillHousesTable();
+      fetchHouseFromURL(); //check for house to edit
+    }
+  });
 };
 
 /**
  * Delete house and redisplay.
  */
-let deleteHouse = (id) => {
-    DBHelper.deleteHouseById(id, (error, response) => {
-      if (error) { // Got an error
-        console.error(error);
-      } else {
-            clearHousesTable();
-            fetchHouses();
-      }
-    });
+const deleteHouse = id => {
+  DBHelper.deleteHouseById(id, (error, response) => {
+    if (error) {
+      // Got an error
+      console.error(error);
+    } else {
+      clearHousesTable();
+      fetchHouses();
+    }
+  });
 };
 
-let addHouse = (formData) => {
-    const method = 'POST';
-    DBHelper.processHouse(method, formData, (error, response) => {
-        if (error) {
-            console.log(error);
-        } else {
-            window.location.replace('./admin.html')
-            // clearHouseForm();
-            // fetchHouses();
-        }
-    });
+const addHouse = formData => {
+  const method = 'POST';
+  DBHelper.processHouse(method, formData, (error, response) => {
+    if (error) {
+      console.log(error);
+    } else {
+      window.location.replace('./admin.html');
+      // clearHouseForm();
+      // fetchHouses();
+    }
+  });
 };
 
-let editHouse = (formData) => {
-    const method = 'PUT';
-    DBHelper.processHouse(method, formData, (error, response) => {
-        if (error) {
-            console.log(error);
-        } else {
-            window.location.replace('./admin.html')
-            // clearHouseForm();
-            // fetchHouses();
-        }
-    });
+const editHouse = formData => {
+  const method = 'PUT';
+  DBHelper.processHouse(method, formData, (error, response) => {
+    if (error) {
+      console.log(error);
+    } else {
+      window.location.replace('./admin.html');
+      // clearHouseForm();
+      // fetchHouses();
+    }
+  });
 };
 
 /**
  * Function to determine if this is add or edit.
  * TODO: Add validation
  */
-let processHouseForm = (event) => {
-    event.preventDefault();
-    // TODO validation
-    let form = document.getElementById('house-form');
-    // FormData API requires use of name attr on form fields
-    let formData = new FormData(form);
-    // Need to convert to json object for use on json-server
-    let jsonData = {};
-    for (let [key, value] of formData.entries()) {
-        jsonData[key] = value;
-    }
+const processHouseForm = event => {
+  event.preventDefault();
+  // TODO validation
+  let form = document.getElementById('house-form');
+  // FormData API requires use of name attr on form fields
+  let formData = new FormData(form);
+  // Need to convert to json object for use on json-server
+  let jsonData = {};
+  for (let [key, value] of formData.entries()) {
+    jsonData[key] = value;
+  }
 
-    if (formData.has('id')) {
-        if (formData.get('id')) {
-            editHouse(jsonData);
-        } else {
-            addHouse(jsonData);
-        }
+  if (formData.has('id')) {
+    if (formData.get('id')) {
+      editHouse(jsonData);
     } else {
-        console.log('Form error no id passed');
+      addHouse(jsonData);
     }
+  } else {
+    console.log('Form error no id passed');
+  }
 };
 
 /**
  * Create all houses HTML and add them to the webpage.
  */
-let fillHousesTable = (houses = self.houses) => {
-    const tbody = document.querySelector('#houses-table > table > tbody');
-    houses.forEach(house => {
-        const row = document.createElement('tr');
-        tbody.append(createHouseRow(house));
-    });
+const fillHousesTable = (houses = self.houses) => {
+  const tbody = document.querySelector('#houses-table > table > tbody');
+  houses.forEach(house => {
+    const row = document.createElement('tr');
+    tbody.append(createHouseRow(house));
+  });
 };
 
 /**
  * Clear all houses HTML.
  */
-let clearHousesTable = () => {
-    const tbody = document.querySelector('#houses-table > table > tbody');
-    tbody.innerHTML = '';
+const clearHousesTable = () => {
+  const tbody = document.querySelector('#houses-table > table > tbody');
+  tbody.innerHTML = '';
 };
 
 /**
  * Create house row HTML.
  */
-let createHouseRow = (house) => {
-    const row = document.createElement('tr');
-    
-    const id = document.createElement('td');
-    id.innerHTML = house.id;
-    row.appendChild(id);
+const createHouseRow = house => {
+  const row = document.createElement('tr');
 
-    const street1 = document.createElement('td');
-    street1.innerHTML = house.street1;
-    row.appendChild(street1);
+  const id = document.createElement('td');
+  id.innerHTML = house.id;
+  row.appendChild(id);
 
-    const city = document.createElement('td');
-    city.innerHTML = house.city;
-    row.appendChild(city);
+  const street1 = document.createElement('td');
+  street1.innerHTML = house.street1;
+  row.appendChild(street1);
 
-    const state = document.createElement('td');
-    state.innerHTML = house.state;
-    row.appendChild(state);
+  const city = document.createElement('td');
+  city.innerHTML = house.city;
+  row.appendChild(city);
 
-    const zip = document.createElement('td');
-    zip.innerHTML = house.zip;
-    row.appendChild(zip);
+  const state = document.createElement('td');
+  state.innerHTML = house.state;
+  row.appendChild(state);
 
-    const options = document.createElement('td');
-    const delHouse = document.createElement('button');
-    const editHouse = document.createElement('a');
+  const zip = document.createElement('td');
+  zip.innerHTML = house.zip;
+  row.appendChild(zip);
 
-    delHouse.className = 'delHouse btn btn-primary mx-2';
-    delHouse.innerHTML = 'Delete';
-    delHouse.addEventListener('click', (event) => {
-        event.preventDefault();
-        deleteHouse(house.id);
-    });
-    options.append(delHouse);
+  const options = document.createElement('td');
+  const delHouse = document.createElement('button');
+  const editHouse = document.createElement('a');
 
-    editHouse.className = 'editHouse btn btn-primary';
-    editHouse.innerHTML = 'Edit';
-    editHouse.href = `./admin.html?mls=${house.id}`;
-    editHouse.setAttribute('aria-label', `${editHouse.innerHTML} ${house.id}`);
-    editHouse.setAttribute('role', 'button');
-    options.append(editHouse);
+  delHouse.className = 'delHouse btn btn-primary mx-2';
+  delHouse.innerHTML = 'Delete';
+  delHouse.addEventListener('click', event => {
+    event.preventDefault();
+    deleteHouse(house.id);
+  });
+  options.append(delHouse);
 
-    row.appendChild(options);
+  editHouse.className = 'editHouse btn btn-primary';
+  editHouse.innerHTML = 'Edit';
+  editHouse.href = `./admin.html?mls=${house.id}`;
+  editHouse.setAttribute('aria-label', `${editHouse.innerHTML} ${house.id}`);
+  editHouse.setAttribute('role', 'button');
+  options.append(editHouse);
 
-    return row;
+  row.appendChild(options);
+
+  return row;
 };
 
 /**
  * Get a parameter by name from page URL.
  */
-let getParameterByName = (name, url) => {
-    if (!url) {
-      url = window.location.href;
-    }
+const getParameterByName = (name, url) => {
+  if (!url) {
+    url = window.location.href;
+  }
 
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
-      results = regex.exec(url);
-    if (!results)
-      return null;
-    if (!results[2])
-      return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  name = name.replace(/[\[\]]/g, '\\$&');
+  const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
