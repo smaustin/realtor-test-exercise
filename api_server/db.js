@@ -78,7 +78,7 @@ generateData = () => {
 let data = JSON.stringify(generateData(), null, 2);
 
 // module.export = generatedData;
-fs.writeFileSync('db.json', data, error => {
+fs.writeFileSync('api_server/db.json', data, error => {
   if (error) console.log('File creation failed.');
   console.log('File created successfully.');
 });
