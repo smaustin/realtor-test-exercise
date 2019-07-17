@@ -1,5 +1,7 @@
 const faker = require('faker');
 const fs = require('fs');
+const path = require('path');
+
 faker.seed(1234)
 
 generateHouses = () => {
@@ -52,7 +54,7 @@ generateUsers = () => {
   // set master user for testing
   users.push({
     "id": 1,
-    "user_email": 'myemail@testing.com',
+    "user_email": 'admin@admin.com',
     "user_password": 'password'
   });
 
@@ -78,7 +80,7 @@ generateData = () => {
 let data = JSON.stringify(generateData(), null, 2);
 
 // module.export = generatedData;
-fs.writeFileSync('db.json', data, error => {
+fs.writeFileSync(path.join(__dirname,'db.json'), data, error => {
   if (error) console.log('File creation failed.');
   console.log('File created successfully.');
 });

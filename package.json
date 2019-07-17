@@ -4,7 +4,7 @@
     "version": "4.2.1",
     "scripts": {
         "start": "node_modules/.bin/gulp watch",
-        "start-mockapi": "node db.js && json-server --config json-server.json --watch db.json"
+        "start-mockapi": "node api_server/db.js && node api_server/api-server.js"
     },
     "description": "An HTML template with a hero heading and feature cards built with Bootstrap",
     "keywords": [
@@ -36,6 +36,7 @@
     "devDependencies": {
         "browser-sync": "2.26.7",
         "del": "^4.1.1",
+        "eslint": "^6.0.1",
         "faker": "^4.1.0",
         "gulp": "4.0.2",
         "json-server": "^0.15.0",

@@ -6,11 +6,13 @@ const del = require("del");
 const gulp = require("gulp");
 const merge = require("merge-stream");
 
+const baseDirectory = "./public";
+
 // BrowserSync
 function browserSync(done) {
   browsersync.init({
     server: {
-      baseDir: "./"
+      baseDir: baseDirectory
     },
     port: 3000
   });
@@ -25,27 +27,27 @@ function browserSyncReload(done) {
 
 // Clean vendor
 function clean() {
-  return del(["./vendor/"]);
+  return del([`${baseDirectory}/vendor/`]);
 }
 
 // Bring third party dependencies from node_modules into vendor directory
 function modules() {
   // Bootstrap
   var bootstrap = gulp.src('./node_modules/bootstrap/dist/**/*')
-    .pipe(gulp.dest('./vendor/bootstrap'));
+    .pipe(gulp.dest(`${baseDirectory}/vendor/bootstrap`));
   // jQuery
   var jquery = gulp.src([
       './node_modules/jquery/dist/*',
       '!./node_modules/jquery/dist/core.js'
     ])
-    .pipe(gulp.dest('./vendor/jquery'));
+    .pipe(gulp.dest(`${baseDirectory}/vendor/jquery`));
   return merge(bootstrap, jquery);
 }
 
 // Watch files
 function watchFiles() {
-  gulp.watch("./**/*.css", browserSyncReload);
-  gulp.watch("./**/*.html", browserSyncReload);
+  gulp.watch(`${baseDirectory}/**/*.css`, browserSyncReload);
+  gulp.watch(`${baseDirectory}/**/*.html`, browserSyncReload);
 }
 
 // Define complex tasks
