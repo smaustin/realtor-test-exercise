@@ -3,7 +3,7 @@
     "name": "realtor-demo-example-express",
     "version": "1.0.0",
     "scripts": {
-        "start": "node_modules/.bin/gulp watch",
+        "start": "./bin/www",
         "start-mockapi": "node api_server/db.js && node api_server/api-server.js"
     },
     "description": "An HTML template with a hero heading and feature cards built with Bootstrap",
