@@ -54,8 +54,8 @@ generateUsers = () => {
   // set master user for testing
   users.push({
     "id": 1,
-    "user_email": 'admin@admin.com',
-    "user_password": 'password'
+    "email": 'admin@admin.com',
+    "password": 'password'
   });
 
   // set a id start and end for number of users to generate
@@ -65,8 +65,8 @@ generateUsers = () => {
 
     users.push({
       "id": id,
-      "user_email": email,
-      "user_password": password
+      "email": email,
+      "password": password
     });
   }
 

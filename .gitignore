@@ -21,4 +21,6 @@ yarn-error.log*
 *.sw?
 
 # Other files
+/sessions
 db.json
+/public/*_archive.html
