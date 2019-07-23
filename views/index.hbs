@@ -1,2 +1,47 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+{{> jumbotron}}
+
+<!-- Search Fields -->
+<div class="text-left my-3" id="search">
+  <div class="filter-options">
+    <h2 class="text-left">Filter Options</h2>
+    <select id="city-select" name="cities" aria-label="City Select" onchange="updateHouses()">
+      <option value="all">All Cities</option>
+    </select>
+    <select id="state-select" name="states" aria-label="State Select" onchange="updateHouses()">
+      <option value="all">All States</option>
+    </select>
+    <select id="zip-select" name="zips" aria-label="Zip Select" onchange="updateHouses()">
+      <option value="all">All Zips</option>
+    </select>
+    <label for="bathrooms-select">Bathrooms</label>
+    <select id="bathrooms-select" name="bathrooms" aria-label="Bathroom Select" onchange="updateHouses()">
+      <option value="all">all</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <label for="bedrooms-select">Bedrooms</label>
+    <select id="bedrooms-select" name="bedrooms" aria-label="Bedroom Select" onchange="updateHouses()">
+      <option value="all">all</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+    </select>
+  </div>
+</div>
+
+<!-- House Display -->
+<div class="row text-center" id="houses-list">
+</div>
+<!-- /.row -->
+
+{{#extend "scripts-block"}}
+  <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
+  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
+{{/extend}}

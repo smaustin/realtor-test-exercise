@@ -93,9 +93,9 @@ const addHouse = formData => {
     if (error) {
       console.log(error);
     } else {
-      window.location.replace('./admin.html');
-      // clearHouseForm();
-      // fetchHouses();
+      // window.location.replace('./admin');
+      clearHouseForm();
+      fetchHouses();
     }
   });
 };
@@ -106,7 +106,7 @@ const editHouse = formData => {
     if (error) {
       console.log(error);
     } else {
-      window.location.replace('./admin.html');
+      window.location.replace('./admin');
       // clearHouseForm();
       // fetchHouses();
     }
@@ -199,7 +199,7 @@ const createHouseRow = house => {
 
   editHouse.className = 'editHouse btn btn-primary';
   editHouse.innerHTML = 'Edit';
-  editHouse.href = `./admin.html?mls=${house.id}`;
+  editHouse.href = `?mls=${house.id}`;
   editHouse.setAttribute('aria-label', `${editHouse.innerHTML} ${house.id}`);
   editHouse.setAttribute('role', 'button');
   options.append(editHouse);

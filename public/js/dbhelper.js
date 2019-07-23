@@ -85,7 +85,7 @@ class DBHelper {
    * Add or Update a house .
    */
   static processHouse(method, formData, callback) {
-    const baseURL = `${DBHelper.DATABASE_URL}/houses/`;
+    const baseURL = `${DBHelper.DATABASE_URL}/houses`;
     const fetchURL = (method === 'PUT') ? `${baseURL}/${formData.id}`: baseURL;
     return fetch(fetchURL, {
       method: method,
@@ -115,6 +115,6 @@ class DBHelper {
    * House page URL.
    */
   static urlForHouse(house) {
-    return (`./house.html?mls=${house.id}`);
+    return (`./house?mls=${house.id}`);
   }
 }
