@@ -46,9 +46,6 @@ const fillHouseForm = (house = self.house) => {
       document.getElementById(key).value = listDate;
     }
   }
-  document
-    .getElementById('house-form')
-    .addEventListener('submit', processHouseForm, false);
   document.getElementById('submit-button').innerHTML = 'Edit House';
 };
 
@@ -149,6 +146,10 @@ const fillHousesTable = (houses = self.houses) => {
     const row = document.createElement('tr');
     tbody.append(createHouseRow(house));
   });
+  // add event listener to form
+  document
+    .getElementById('house-form')
+    .addEventListener('submit', processHouseForm, false);
 };
 
 /**
